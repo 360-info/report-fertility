@@ -1,0 +1,115 @@
+---
+title: Worlwide Fertility Ratews
+subtitle: UN / World Bank Data
+format:
+  360-analysis-html: default
+author: Dean Marchiori
+date: last-modified
+code-fold: true
+---
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(here)
+library(janitor)
+```
+
+Download (if doesnt already exist) the UN demographic excel data. 
+
+```{r}
+# DEMOGRAPHICS
+if (!file.exists(here("data/raw/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_REV1.xlsx"))) {
+    download.file("https://population.un.org/wpp/Download/Files/1_Indicators%20(Standard)/EXCEL_FILES/1_General/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_REV1.xlsx",
+        destfile = here("data/raw/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_REV1.xlsx"), method = "auto"
+    )
+}
+
+demo_raw <- read_excel(here("data/raw/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_REV1.xlsx"), skip = 16, guess_max = 2000)
+
+# LOCATION DATA
+if (!file.exists(here("data/raw/WPP2022_F01_LOCATIONS.XLSX"))) {
+    download.file("https://population.un.org/wpp/Download/Files/4_Metadata/WPP2022_F01_LOCATIONS.XLSX",
+        destfile = here("data/raw/WPP2022_F01_LOCATIONS.XLSX"), method = "auto"
+    )
+}
+
+country_raw <- read_excel(here("data/raw/WPP2022_F01_LOCATIONS.XLSX"), sheet = "DB")
+
+```
+
+Data processing 
+
+```{r}
+
+country <- country_raw |>
+    clean_names() |>
+    filter(loc_type_name == "Country/Area") |>
+    select(location, iso3_code, geo_reg_name)
+
+
+demo <- demo_raw |>
+    clean_names() |>
+    select(
+        region_subregion_country_or_area,
+        iso3_alpha_code,
+        type,
+        year,
+        total_population_as_of_1_january_thousands,
+        mean_age_childbearing_years,
+        total_fertility_rate_live_births_per_woman
+    ) |>
+    filter(
+        type == "Country/Area",
+        region_subregion_country_or_area != "Holy See"
+    ) |>
+    mutate(across(
+        c(
+            total_population_as_of_1_january_thousands,
+            mean_age_childbearing_years,
+            total_fertility_rate_live_births_per_woman
+        ),
+        parse_number
+    )) |>
+    mutate(total_population_as_of_1_january = total_population_as_of_1_january_thousands * 1000) |>
+    select(
+        country = region_subregion_country_or_area,
+        iso3_code = iso3_alpha_code,
+        year,
+        population = total_population_as_of_1_january,
+        mean_age_childbearing_years,
+        total_fertility_rate = total_fertility_rate_live_births_per_woman
+    )
+
+```
+
+Join location data, add labels and export as csv
+
+```{r}
+final <- demo |>
+    inner_join(country) |>
+    select(-location,
+        -iso3_code,
+        region = geo_reg_name
+    ) |>
+    group_by(year, region) |>
+    mutate(
+        f_rank = rank(total_fertility_rate, ties.method = "min"),
+        c_rank = rank(mean_age_childbearing_years, ties.method = "min"),
+        p_rank = rank(population, ties.method = "min")
+    ) |>
+    mutate(label = ifelse(
+        f_rank == min(f_rank) |
+            f_rank == max(f_rank) |
+            c_rank == min(c_rank) |
+            c_rank == max(c_rank) |
+            p_rank == max(p_rank),
+        yes = country,
+        no = ""
+    ))
+
+write_csv(final, here("data/final/global_fertility.csv"))
+```
+
+
+
