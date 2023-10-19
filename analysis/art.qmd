@@ -1,0 +1,112 @@
+---
+title: ART Clinic Locations
+subtitle: Where are ART clinics in Australia?
+format:
+  360-analysis-html: default
+author: Dean Marchiori
+date: last-modified
+code-fold: true
+---
+
+```{r}
+library(tidyverse)
+library(sf)
+library(here)
+library(rvest)
+library(tidygeocoder)
+library(rnaturalearth)
+library(terra)
+library(exactextractr)
+```
+
+Web scraping the Fertility Society of Australia and New Zealand website for accredited clinic locations.  
+
+```{r}
+# URL supplied by the FSA
+url <- "https://www.fertilitysociety.com.au/code-of-practice"
+
+html <- read_html(url)
+
+clinics <- tibble(
+    id = html_text2(html_elements(html, ".col-2")),
+    clinic = html_text2(html_elements(html, ".col-1"))
+) |>
+    filter(
+        clinic != "ART Unit", # removing html table headers
+        !stringr::str_starts(id, "1") # removing NZ codes 1xx and Overseas 1XXX
+    ) |>
+    mutate(
+        clinic = str_replace_all(clinic, c("\n" = " ", "\u2028" = " "))
+    )
+
+```
+
+Geocode using the ArcGIS geocoding service
+
+```{r}
+#| eval: false
+
+clinic_geo <- clinics |>
+    geocode(clinic, method = "arcgis")
+
+write_csv(clinic_geo, here("data/final/clinic_geo.csv"))
+```
+
+Reading in cached, geocoded clinics and mapping 
+
+```{r}
+clinic_geo <- read_csv(here("data/final/clinic_geo.csv"))
+
+clinic_sf <- clinic_geo |>
+    st_as_sf(coords = c("long", "lat"), crs = 4326) |>
+    st_transform(3577)
+```
+
+make grid over Australia
+
+```{r}
+aus <- ne_countries(country = "Australia", returnclass = "sf") |>
+    st_transform(3577)
+
+hex <- aus |>
+    sf::st_make_grid(square = F, n = 80) |>
+    st_as_sf()
+
+```
+
+Import ABS population gridded data
+
+```{r}
+popn_raster <- rast(here("data/raw/Australian_Population_Grid_2022_in_GEOTIFF_format/apg22r_1_0_0.tif"))
+```
+
+populate hex grid with metrics 
+
+```{r}
+hex_dist <- hex |>
+    mutate(
+        population = exactextractr::exact_extract(popn_raster, hex, fun = "sum"),
+        nrst = sf::st_nearest_feature(hex, clinic_sf),
+        dist = as.numeric(st_distance(hex, clinic_sf[nrst, ], by_element = TRUE)),
+        dist_km_lab = paste0(round(dist / 1000, 0), "km to nearest clinic")
+    ) |>
+    mutate(dist_thresh = ifelse(dist > 240000, NA, round(dist / 1000, 0))) |> # arbitrary threshold represening 3 hours drivetime at 80kmh
+    filter(population > 0) |>
+    st_transform(4326) # converting back for Flourish
+
+write_sf(hex_dist, here("data/final/aus_hex_export.geojson"))
+```
+
+Export clinics 
+
+```{r}
+clinic_sf |>
+    st_transform(4326) |>
+    mutate(
+        long = sf::st_coordinates(geometry)[, 1],
+        lat = sf::st_coordinates(geometry)[, 2]
+    ) |>
+    st_drop_geometry() |>
+    write_csv(here("data/final/clinic_export.csv"))
+```
+
