@@ -1,0 +1,23 @@
+---
+title: ABS
+subtitle: Fertility
+format:
+  360-analysis-html: default
+author: Dean Marchiori
+date: last-modified
+code-fold: true
+---
+
+```{r}
+library(tidyverse)
+library(here)
+```
+
+
+```{r}
+fert <- read_csv(here("data/final/abs_fertility.csv")) |>
+    pivot_longer(-c(state, region), names_to = "year", values_to = "tfr") |>
+    pivot_wider(names_from = region, values_from = tfr) |>
+    write_csv(here("data/final/abs_tfr.csv"))
+
+```
