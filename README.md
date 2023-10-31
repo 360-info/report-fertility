@@ -19,7 +19,7 @@ These charts, as well as the analyses that underpin them, are available under a 
 
 Data in these charts comes from:
 
-* See (data/README.md)
+* See [data/README.md](data/README.md)
 
 **Please attribute 360info and the data sources when you use and remix these visualisations.**
 
