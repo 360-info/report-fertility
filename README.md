@@ -1,12 +1,14 @@
 # The fertility industry
 ### [📊&nbsp;Get&nbsp;the&nbsp;data](data) • [💻&nbsp;Reproduce&nbsp;the&nbsp;analysis](#-reproduce-the-analysis)
 
+An April 2023 WHO report shows that 1 in 6 people worldwide experience infertility issues. Falling birth rates and rising longevity puts pressure on public finance and compels governments to generate policies to reverse demographic decline.
+This has been accompanied by an explosion of Assisted Reproductive Technologies (ARTs). Australia’s first public egg and sperm bank opened in July 2023 in Victoria and is the second step in the Victorian Government's $70 million initiative to establish a Public Fertility Service.
+What are the industries evolving with the rapid growth of the fertility industry and what legal and ethical problems do they pose? 
 
-![](out/img/fertility_clinic_map.png)
-[Link](https://public.flourish.studio/visualisation/15345428/)
 
-![](out/img/fertility_fertility_global.png)
-[Link](https://public.flourish.studio/visualisation/15342491/)
+[![](out/img/fertility_clinic_map.png)](https://public.flourish.studio/visualisation/15345428/)
+
+[![](out/img/fertility_fertility_global.png)](https://public.flourish.studio/visualisation/15342491/)  
 
 
 ## ♻️ Use + Remix rights
