@@ -21,7 +21,14 @@ Thumbs.db
 
 # data folder 
 data/*  
+!data/raw
+data/raw/*
+!data/raw/Australian_Population_Grid_2022_in_GEOTIFF_format.zip 
+!data/raw/33010DO004_2022_ST_AUST.xlsx
 !data/final
 data/final/*
 !/data/final/global_fertility.csv
 !/data/final/fertility_art_cycles.xlsx
+!/data/final/aus_hex_export.geojson 
+!/data/final/clinic_export.csv 
+!/data/final/abs_tfr.csv
