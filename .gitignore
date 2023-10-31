@@ -16,8 +16,11 @@ Thumbs.db
 /.quarto/
 
 # output folder (you may want to exclude files when we publish!)
-/out/*
-!/out
+out/*
+!out/img
+out/img/*  
+!out/img/fertility_clinic_map.png
+!out/img/fertility_fertility_global.png  
 
 # data folder 
 data/*  
