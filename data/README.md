@@ -24,16 +24,16 @@ Australian population grid 2022 in GeoTIFF format
 
 ### `WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_REV1.xlsx` and `WPP2022_F01_LOCATIONS.XLSX`
 
-**Source:** United Nations - World Population Prospects 2022   
-**Accessed:** 2023-10-13   
+**United Nations - World Population Prospects 2022**    
 United Nations, Department of Economic and Social Affairs, Population Division (2022). World Population Prospects 2022, Online Edition.
 Copyright © 2022 by United Nations, made available under a Creative Commons license CC BY 3.0  IGO: http://creativecommons.org/licenses/by/3.0/igo/  
-**Link:** https://population.un.org/wpp/Download/Standard/MostUsed/  
-**Link:** https://population.un.org/wpp/Download/Files/1_Indicators%20(Standard)/EXCEL_FILES/1_General/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_REV1.xlsx  
+https://population.un.org/wpp/Download/Standard/MostUsed/   
+https://population.un.org/wpp/Download/Files/1_Indicators%20(Standard)/EXCEL_FILES/1_General/WPP2022_GEN_F01_DEMOGRAPHIC_INDICATORS_REV1.xlsx   
 
 Comprehensive list of locations with codes (numerical and ISO3), description, major area, region and development group
-**Link:** https://population.un.org/wpp/Download/Files/4_Metadata/WPP2022_F01_LOCATIONS.XLSX  
-**Link:** https://population.un.org/wpp/Download/Documentation/Documentation/  
+https://population.un.org/wpp/Download/Files/4_Metadata/WPP2022_F01_LOCATIONS.XLSX  
+https://population.un.org/wpp/Download/Documentation/Documentation/    
+**Accessed:** 2023-10-13  
 
 
 ## `final`  
@@ -44,19 +44,19 @@ Final, clean datasets for use.
 
 Reshaped CSV from `33010DO004_2022_ST_AUST.xlsx`. Produced using `analysis/abs_fertility.qmd`.  Focuses on time series total fertility rates for Australian states, disaggregated by remoteness category.  
 
-### `aus_hex_export.geojson`  
+### `aus_hex_export.geojson`    
 
+**Fertility Society of Australia and New Zealand**  
 Exported hex grid of Australia with calculated distances to ART clinics. See `analysis/art.qmd`.    
-**Source:** Fertility Society of Australia and New Zealand  
-**Link:** https://www.fertilitysociety.com.au/code-of-practice/  
+https://www.fertilitysociety.com.au/code-of-practice/  
 **Accessed:** 2023-10-19    
 
 ### `clinic_export.csv`  
 
+**Fertility Society of Australia and New Zealand**    
 Exported list of accredited Australian ART clinics, with lat/long info. See `analysis/art.qmd`  
-Source: Fertility Society of Australia and New Zealand
-https://www.fertilitysociety.com.au/code-of-practice/
-Accessed: 2023-10-19
+https://www.fertilitysociety.com.au/code-of-practice/  
+**Accessed:** 2023-10-19  
 
 ### `global_fertility.csv`
 
@@ -64,13 +64,14 @@ Exported and cleaned version of the **United Nations - World Population Prospect
 
 ### `fertility_art_cycles.xlsx`
 
-Data on fertility cycles in Australia and New Zealand. 
+**Assisted reproductive technology in Australia and New Zealand 2021**  
+Data on fertility cycles in Australia and New Zealand.   
 
 Newman JE, Paul RC, Chambers GM 2023. Assisted reproductive technology in Australia and New
 Zealand 2021. Sydney: National Perinatal Epidemiology and Statistics Unit, the University of New
 South Wales, Sydney  
-**Link:** https://npesu.unsw.edu.au/sites/default/files/npesu/data_collection/Assisted%20Reproductive%20Technology%20in%20Australia%20and%20New%20Zealand%202021.pdf  
-**Link:** https://npesu.unsw.edu.au/data-collection/australian-new-zealand-assisted-reproduction-database-anzard  
-**Accessed:** 2023-10-19  
+https://npesu.unsw.edu.au/sites/default/files/npesu/data_collection/Assisted%20Reproductive%20Technology%20in%20Australia%20and%20New%20Zealand%202021.pdf   
+https://npesu.unsw.edu.au/data-collection/australian-new-zealand-assisted-reproduction-database-anzard   
+**Accessed:** 2023-10-19   
 This report is protected by copyright which is wholly owned by UNSW Sydney.  
 Data and graphics reproduced and published under [Creative Commons Attribution 4.0](https://creativecommons.org/licenses/by/4.0) with permission from copyright holder.   
