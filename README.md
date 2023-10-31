@@ -6,9 +6,9 @@ This has been accompanied by an explosion of Assisted Reproductive Technologies 
 What are the industries evolving with the rapid growth of the fertility industry and what legal and ethical problems do they pose? 
 
 
-[![](out/img/fertility_clinic_map.png)](https://public.flourish.studio/visualisation/15345428/)
+[![](img/fertility_clinic_map.png)](https://public.flourish.studio/visualisation/15345428/)
 
-[![](out/img/fertility_fertility_global.png)](https://public.flourish.studio/visualisation/15342491/)  
+[![](img/fertility_fertility_global.png)](https://public.flourish.studio/visualisation/15342491/)  
 
 
 ## ♻️ Use + Remix rights
