@@ -41,12 +41,11 @@ country_raw <- read_excel(here("data/raw/WPP2022_F01_LOCATIONS.XLSX"), sheet = "
 Data processing 
 
 ```{r}
-
 country <- country_raw |>
     clean_names() |>
     filter(loc_type_name == "Country/Area") |>
+    mutate(geo_reg_name = fct_recode(geo_reg_name, `North America` = "Northern America")) |>
     select(location, iso3_code, geo_reg_name)
-
 
 demo <- demo_raw |>
     clean_names() |>

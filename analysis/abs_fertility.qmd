@@ -1,6 +1,6 @@
 ---
-title: ABS
-subtitle: Fertility
+title: Births, Australia (2022) 
+subtitle: Australian Bureau of Statistics
 format:
   360-analysis-html: default
 author: Dean Marchiori
@@ -13,11 +13,13 @@ library(tidyverse)
 library(here)
 ```
 
+Reading in extract of ABS report. See `data/README.md` for more info. 
+
+Pivot and export data for Flourish visualisation. 
 
 ```{r}
-fert <- read_csv(here("data/final/abs_fertility.csv")) |>
+read_csv(here("data/raw/abs_fertility.csv")) |>
     pivot_longer(-c(state, region), names_to = "year", values_to = "tfr") |>
     pivot_wider(names_from = region, values_from = tfr) |>
     write_csv(here("data/final/abs_tfr.csv"))
-
 ```

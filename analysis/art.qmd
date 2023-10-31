@@ -41,7 +41,7 @@ clinics <- tibble(
 
 ```
 
-Geocode using the ArcGIS geocoding service
+Geocode using the ArcGIS geocoding service. Evaluation supressed here due to runtime and to preserve original results. Please amend chunk option. 
 
 ```{r}
 #| eval: false
@@ -77,6 +77,7 @@ hex <- aus |>
 Import ABS population gridded data
 
 ```{r}
+unzip(here("data/raw/Australian_Population_Grid_2022_in_GEOTIFF_format.zip"), exdir = here("data/raw/Australian_Population_Grid_2022_in_GEOTIFF_format"))
 popn_raster <- rast(here("data/raw/Australian_Population_Grid_2022_in_GEOTIFF_format/apg22r_1_0_0.tif"))
 ```
 
