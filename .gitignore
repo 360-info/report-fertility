@@ -28,6 +28,9 @@ data/*
 data/raw/*
 !data/raw/Australian_Population_Grid_2022_in_GEOTIFF_format.zip 
 !data/raw/33010DO004_2022_ST_AUST.xlsx
+!data/raw/abs_fertility.csv  
+
+
 !data/final
 data/final/*
 !/data/final/global_fertility.csv
