@@ -29,11 +29,11 @@
 		"ghcr.io/rocker-org/devcontainer-features/r-packages:1": {
 			"packages": "github::rstudio/renv,tidyverse,here,httpgd,janitor,github::360-info/themes360info,sf,rvest,tidygeocoder,rnaturalearth,terra,exactextractr,readxl"
 		}
-	}
+	},
 
 	/* Use 'postCreateCommand' to run commands after the container is created
 	  (for example, copy some extra fonts to /usr/local/share/fonts) */
-	// "postCreateCommand": "",
+	"postCreateCommand": "sudo cp /workspaces/report-population-power/openssl.cnf /etc/ssl/openssl.cnf"
 
 	/* Use 'forwardPorts' to make a list of ports inside the container available
 	   locally. */

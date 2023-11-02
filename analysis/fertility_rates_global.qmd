@@ -1,5 +1,5 @@
 ---
-title: Worlwide Fertility Ratews
+title: Worldwide Fertility Rates
 subtitle: UN / World Bank Data
 format:
   360-analysis-html: default
@@ -13,9 +13,15 @@ library(tidyverse)
 library(readxl)
 library(here)
 library(janitor)
+
+# longer timeout for un population downloads
+# NOTE - an OpenSSL conf is supplied with this workspace to allow downloading
+# data from a UN population server that is improperly configured. be aware that
+# an attacker could try to mimic this server when you are downloading this data.
+options(timeout = max(1000, getOption("timeout")))
 ```
 
-Download (if doesnt already exist) the UN demographic excel data. 
+Download (if doesn't already exist) the UN demographic excel data. 
 
 ```{r}
 # DEMOGRAPHICS
@@ -86,7 +92,7 @@ Join location data, add labels and export as csv
 
 ```{r}
 final <- demo |>
-    inner_join(country) |>
+    inner_join(country, by = join_by(iso3_code)) |>
     select(-location,
         -iso3_code,
         region = geo_reg_name
