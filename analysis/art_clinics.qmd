@@ -41,15 +41,15 @@ clinics <- tibble(
 
 ```
 
-Geocode using the ArcGIS geocoding service. Evaluation supressed here due to runtime and to preserve original results. Please amend chunk option. 
+Geocode clinic addresses only if they haven't previously been geocoded (so that we don't slam Esri if we run this repeatedly). Delete `data/final/clinic_geo.csv` if this does need to be re-run:
 
 ```{r}
-#| eval: false
+if (!file.exists(here("data/final/clinic_geo.csv"))) {
+    clinic_geo <- clinics |>
+        geocode(clinic, method = "arcgis")
 
-clinic_geo <- clinics |>
-    geocode(clinic, method = "arcgis")
-
-write_csv(clinic_geo, here("data/final/clinic_geo.csv"))
+    write_csv(clinic_geo, here("data/final/clinic_geo.csv"))
+}
 ```
 
 Reading in cached, geocoded clinics and mapping 
@@ -62,7 +62,7 @@ clinic_sf <- clinic_geo |>
     st_transform(3577)
 ```
 
-make grid over Australia
+Make grid over Australia
 
 ```{r}
 aus <- ne_countries(country = "Australia", returnclass = "sf") |>
@@ -81,7 +81,7 @@ unzip(here("data/raw/Australian_Population_Grid_2022_in_GEOTIFF_format.zip"), ex
 popn_raster <- rast(here("data/raw/Australian_Population_Grid_2022_in_GEOTIFF_format/apg22r_1_0_0.tif"))
 ```
 
-populate hex grid with metrics 
+Populate hex grid with metrics 
 
 ```{r}
 hex_dist <- hex |>
